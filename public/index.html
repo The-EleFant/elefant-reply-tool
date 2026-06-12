@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>theEleFant — Response Generator</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --p:#6B2FA0;--p2:#8B45C5;--pbg:#F5EDFF;
+  --gold:#F5A623;--gbg:#FFF8E7;
+  --green:#00875A;--grbg:#E3FCF7;
+  --red:#C62828;--rbg:#FFF0F0;
+  --teal:#0277BD;
+  --ink:#1C0B33;--muted:#6B5E7A;
+  --border:rgba(107,47,160,0.12);
+  --bg:#FDFAFF;--r:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+.hdr{background:var(--p);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(107,47,160,0.35)}
+.logo{font-family:'Baloo 2',cursive;font-size:20px;font-weight:800;color:#fff;letter-spacing:-.5px}
+.logo span{color:var(--gold)}
+.hdr-sub{font-size:11px;color:rgba(255,255,255,.55);margin-top:1px}
+.badge{background:rgba(255,255,255,.12);color:#fff;font-size:11px;font-weight:700;padding:4px 12px;border-radius:100px;border:1px solid rgba(255,255,255,.18)}
+.main{max-width:860px;margin:0 auto;padding:22px 16px 80px}
+.tip{background:var(--gbg);border:1.5px solid rgba(245,166,35,.3);border-radius:10px;padding:12px 15px;margin-bottom:18px;font-size:12px;color:#7A5200;line-height:1.6}
+.tip-t{font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#9A6500;margin-bottom:4px}
+/* channel tabs */
+.ch-tabs{display:flex;background:#fff;border:1.5px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:18px}
+.ch-tab{flex:1;padding:11px 6px;text-align:center;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;color:var(--muted);background:#fff;border:none;border-right:1px solid var(--border);cursor:pointer;transition:all .15s}
+.ch-tab:last-child{border-right:none}
+.ch-tab.on{background:var(--p);color:#fff}
+.ch-tab:not(.on):hover{background:var(--pbg);color:var(--p)}
+/* panels */
+.panel{display:none}.panel.on{display:block}
+/* cards */
+.card{background:#fff;border:1.5px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:14px}
+.lbl{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:7px}
+.lbl-p{color:var(--p)}.lbl-g{color:var(--green)}.lbl-o{color:#9A6500}
+/* pills */
+.pills{display:flex;gap:7px;flex-wrap:wrap}
+.pill{padding:6px 13px;border-radius:100px;border:2px solid var(--border);background:#fff;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .15s}
+.pill:hover{border-color:var(--p);color:var(--p)}
+/* inputs */
+textarea,input[type=text]{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:10px 13px;font-family:'Nunito',sans-serif;font-size:14px;color:var(--ink);background:var(--bg);resize:vertical;line-height:1.6;transition:border-color .15s;outline:none}
+textarea{min-height:80px}
+textarea:focus,input:focus{border-color:var(--p);background:#fff}
+textarea::placeholder,input::placeholder{color:#BBA8CC}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:560px){.two{grid-template-columns:1fr}.ch-tab{font-size:10px;padding:10px 3px}}
+/* tones */
+.tone-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.tone{padding:5px 13px;border-radius:100px;border:1.5px solid var(--border);background:#fff;font-family:'Nunito',sans-serif;font-size:11px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .13s}
+.tone.on{background:var(--pbg);border-color:var(--p);color:var(--p)}
+/* btn */
+.gen-btn{width:100%;padding:15px;background:var(--p);color:#fff;border:none;border-radius:100px;font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;cursor:pointer;transition:all .2s;box-shadow:0 6px 20px rgba(107,47,160,.32);margin-top:4px;display:flex;align-items:center;justify-content:center;gap:8px}
+.gen-btn:hover{background:var(--p2);transform:translateY(-2px)}
+.gen-btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.spin{width:16px;height:16px;border:2.5px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* error */
+.err{background:var(--rbg);border:1.5px solid rgba(198,40,40,.25);border-radius:10px;padding:11px 14px;color:var(--red);font-size:13px;font-weight:600;margin-top:12px;display:none}
+/* output */
+.out-wrap{display:none;margin-top:18px}
+.out-card{background:#fff;border:2px solid var(--p);border-radius:var(--r);overflow:hidden;box-shadow:0 8px 32px rgba(107,47,160,.12)}
+.out-hdr{background:var(--pbg);padding:11px 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.out-hdr-lbl{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--p)}
+.out-acts{display:flex;gap:7px}
+.obtn{padding:5px 13px;border-radius:100px;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;cursor:pointer;border:none;transition:all .13s}
+.obtn-c{background:var(--p);color:#fff}.obtn-c:hover{background:var(--p2)}
+.obtn-r{background:#fff;color:var(--p);border:1.5px solid var(--p)}.obtn-r:hover{background:var(--pbg)}
+.out-subj{padding:10px 18px;background:#fafafa;border-bottom:1px solid var(--border)}
+.out-subj-lbl{font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.out-subj-val{font-size:13px;font-weight:700;color:var(--ink)}
+.out-body{padding:18px 20px;font-size:14px;line-height:1.75;color:var(--ink);white-space:pre-wrap}
+.out-meta{padding:9px 16px;background:var(--bg);border-top:1px solid var(--border);display:flex;gap:14px;flex-wrap:wrap}
+.meta-i{font-size:11px;color:var(--muted);font-weight:600;display:flex;align-items:center;gap:5px}
+.mdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+/* toast */
+.toast{position:fixed;bottom:22px;right:22px;background:var(--ink);color:#fff;padding:11px 18px;border-radius:100px;font-size:13px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.22);opacity:0;transform:translateY(8px);transition:all .22s;pointer-events:none;z-index:999}
+.toast.show{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div>
+    <div class="logo">the <span>EleFant</span></div>
+    <div class="hdr-sub">@theelefant_official · AI Response Generator</div>
+  </div>
+  <div class="badge">Powered by Claude ✨</div>
+</div>
+
+<div class="main">
+  <div class="tip">
+    <div class="tip-t">How to use</div>
+    Select the channel → pick the complaint type → paste the original comment and the resolution → Generate. Replies are crafted to be warm, human, and never defensive.
+  </div>
+
+  <!-- TABS -->
+  <div class="ch-tabs">
+    <button class="ch-tab on" onclick="switchCh('instagram',this)">📸 Instagram</button>
+    <button class="ch-tab" onclick="switchCh('facebook',this)">👥 Facebook</button>
+    <button class="ch-tab" onclick="switchCh('playstore',this)">⭐ Play Store</button>
+    <button class="ch-tab" onclick="switchCh('email',this)">📧 Email</button>
+    <button class="ch-tab" onclick="switchCh('whatsapp',this)">💬 WhatsApp</button>
+  </div>
+
+  <!-- ── INSTAGRAM ── -->
+  <div class="panel on" id="p-instagram">
+    <div class="card"><div class="lbl lbl-p">Complaint Type</div>
+      <div class="pills" id="pills-instagram">
+        <button class="pill" style="border-color:var(--gold);color:#7A4500;background:#FFF8E7" data-t="delivery">📦 Delivery Delay</button>
+        <button class="pill" data-t="refund">💰 Refund</button>
+        <button class="pill" data-t="hygiene">🧼 Hygiene/Quality</button>
+        <button class="pill" data-t="app">📱 App Bug</button>
+        <button class="pill" data-t="availability">🚫 Toy Unavailable</button>
+        <button class="pill" data-t="harsh">🔥 Harsh/Unfair</button>
+        <button class="pill" data-t="positive">⭐ Positive</button>
+      </div>
+    </div>
+    <div class="card"><div class="lbl lbl-p">Original Comment</div>
+      <textarea id="ig-c" placeholder="Paste the customer's Instagram comment exactly as written..."></textarea>
+    </div>
+    <div class="card"><div class="lbl lbl-g">Resolution / Current Status</div>
+      <textarea id="ig-r" style="min-height:65px" placeholder="e.g. 'Refund of ₹7,200 processed on 10 June.' or 'Team will call within 2 hours.'"></textarea>
+      <div class="lbl lbl-o" style="margin-top:14px">Tone</div>
+      <div class="tone-row" id="tone-instagram">
+        <button class="tone on" data-t="Warm & Professional">Warm & Professional</button>
+        <button class="tone" data-t="Deeply Empathetic">Deeply Empathetic</button>
+        <button class="tone" data-t="Firm but Fair">Firm but Fair</button>
+        <button class="tone" data-t="Brief & Clean">Brief & Clean</button>
+      </div>
+    </div>
+    <button class="gen-btn" id="btn-instagram" onclick="gen('instagram')">
+      <div class="spin" id="sp-instagram"></div>
+      <span id="lbl-instagram">✨ Generate Instagram Reply</span>
+    </button>
+    <div class="err" id="err-instagram"></div>
+    <div class="out-wrap" id="out-instagram">
+      <div class="out-card">
+        <div class="out-hdr"><div class="out-hdr-lbl">📸 Instagram Reply</div>
+          <div class="out-acts"><button class="obtn obtn-r" onclick="gen('instagram')">↺ Regenerate</button><button class="obtn obtn-c" onclick="cp('instagram')">Copy</button></div>
+        </div>
+        <div class="out-body" id="ob-instagram"></div>
+        <div class="out-meta" id="om-instagram"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FACEBOOK ── -->
+  <div class="panel" id="p-facebook">
+    <div class="card"><div class="lbl lbl-p">Complaint Type</div>
+      <div class="pills" id="pills-facebook">
+        <button class="pill" style="border-color:var(--gold);color:#7A4500;background:#FFF8E7" data-t="delivery">📦 Delivery Delay</button>
+        <button class="pill" data-t="refund">💰 Refund</button>
+        <button class="pill" data-t="hygiene">🧼 Hygiene/Quality</button>
+        <button class="pill" data-t="app">📱 App Bug</button>
+        <button class="pill" data-t="availability">🚫 Toy Unavailable</button>
+        <button class="pill" data-t="harsh">🔥 Harsh/Unfair</button>
+        <button class="pill" data-t="positive">⭐ Positive</button>
+      </div>
+    </div>
+    <div class="card"><div class="lbl lbl-p">Original Comment</div>
+      <textarea id="fb-c" placeholder="Paste the Facebook comment..."></textarea>
+    </div>
+    <div class="card"><div class="lbl lbl-g">Resolution / Current Status</div>
+      <textarea id="fb-r" style="min-height:65px" placeholder="What's been done or what will happen next..."></textarea>
+      <div class="lbl lbl-o" style="margin-top:14px">Tone</div>
+      <div class="tone-row" id="tone-facebook">
+        <button class="tone on" data-t="Warm & Professional">Warm & Professional</button>
+        <button class="tone" data-t="Deeply Empathetic">Deeply Empathetic</button>
+        <button class="tone" data-t="Firm but Fair">Firm but Fair</button>
+        <button class="tone" data-t="Brief & Clean">Brief & Clean</button>
+      </div>
+    </div>
+    <button class="gen-btn" id="btn-facebook" onclick="gen('facebook')">
+      <div class="spin" id="sp-facebook"></div>
+      <span id="lbl-facebook">✨ Generate Facebook Reply</span>
+    </button>
+    <div class="err" id="err-facebook"></div>
+    <div class="out-wrap" id="out-facebook">
+      <div class="out-card">
+        <div class="out-hdr"><div class="out-hdr-lbl">👥 Facebook Reply</div>
+          <div class="out-acts"><button class="obtn obtn-r" onclick="gen('facebook')">↺ Regenerate</button><button class="obtn obtn-c" onclick="cp('facebook')">Copy</button></div>
+        </div>
+        <div class="out-body" id="ob-facebook"></div>
+        <div class="out-meta" id="om-facebook"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PLAY STORE ── -->
+  <div class="panel" id="p-playstore">
+    <div class="card"><div class="lbl lbl-p">Review Type</div>
+      <div class="pills" id="pills-playstore">
+        <button class="pill" style="border-color:var(--red);color:var(--red)" data-t="1star">1★ Scam/Fraud</button>
+        <button class="pill" data-t="delivery">📦 Delivery</button>
+        <button class="pill" data-t="app">📱 App Bug</button>
+        <button class="pill" data-t="refund">💰 Refund</button>
+        <button class="pill" data-t="availability">🚫 Availability</button>
+        <button class="pill" data-t="positive">⭐ Positive</button>
+      </div>
+    </div>
+    <div class="card"><div class="lbl lbl-p">Play Store Review Text</div>
+      <textarea id="ps-c" placeholder="Paste the full Play Store review..."></textarea>
+    </div>
+    <div class="card"><div class="lbl lbl-g">Resolution / Current Status</div>
+      <textarea id="ps-r" style="min-height:65px" placeholder="What's been resolved or what action is being taken..."></textarea>
+      <div class="lbl lbl-o" style="margin-top:14px">Tone</div>
+      <div class="tone-row" id="tone-playstore">
+        <button class="tone on" data-t="Warm & Professional">Warm & Professional</button>
+        <button class="tone" data-t="Firm but Fair">Firm but Fair</button>
+        <button class="tone" data-t="Brief & Clean">Brief & Clean</button>
+      </div>
+    </div>
+    <button class="gen-btn" id="btn-playstore" onclick="gen('playstore')">
+      <div class="spin" id="sp-playstore"></div>
+      <span id="lbl-playstore">✨ Generate Play Store Response</span>
+    </button>
+    <div class="err" id="err-playstore"></div>
+    <div class="out-wrap" id="out-playstore">
+      <div class="out-card">
+        <div class="out-hdr"><div class="out-hdr-lbl">⭐ Play Store Response</div>
+          <div class="out-acts"><button class="obtn obtn-r" onclick="gen('playstore')">↺ Regenerate</button><button class="obtn obtn-c" onclick="cp('playstore')">Copy</button></div>
+        </div>
+        <div class="out-body" id="ob-playstore"></div>
+        <div class="out-meta" id="om-playstore"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── EMAIL ── -->
+  <div class="panel" id="p-email">
+    <div class="card"><div class="lbl lbl-p">Issue Type</div>
+      <div class="pills" id="pills-email">
+        <button class="pill" style="border-color:var(--gold);color:#7A4500;background:#FFF8E7" data-t="delivery">📦 Delivery Delay</button>
+        <button class="pill" data-t="refund">💰 Refund Request</button>
+        <button class="pill" data-t="hygiene">🧼 Hygiene/Quality</button>
+        <button class="pill" data-t="app">📱 App/Tech Issue</button>
+        <button class="pill" data-t="availability">🚫 Toy Unavailable</button>
+        <button class="pill" data-t="cancellation">❌ Cancellation</button>
+        <button class="pill" data-t="escalation">⚠️ Escalation/Legal</button>
+        <button class="pill" data-t="general">💬 General Enquiry</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="two">
+        <div><div class="lbl lbl-p">Customer Name</div><input type="text" id="em-n" placeholder="e.g. Priya Sharma"></div>
+        <div><div class="lbl lbl-p">Customer's City</div><input type="text" id="em-city" placeholder="e.g. Mumbai"></div>
+      </div>
+    </div>
+    <div class="card"><div class="lbl lbl-p">Original Email / Complaint</div>
+      <textarea id="em-c" style="min-height:100px" placeholder="Paste the customer's full email or complaint message..."></textarea>
+    </div>
+    <div class="card"><div class="lbl lbl-g">Resolution / Action Taken</div>
+      <textarea id="em-r" style="min-height:70px" placeholder="What's been done or committed to? e.g. 'Refund of ₹8,999 initiated on 10 June, 5-7 working days to reflect.'"></textarea>
+      <div class="lbl lbl-o" style="margin-top:14px">Email Tone</div>
+      <div class="tone-row" id="tone-email">
+        <button class="tone on" data-t="Warm & Formal">Warm & Formal</button>
+        <button class="tone" data-t="Empathetic + Detailed">Empathetic + Detailed</button>
+        <button class="tone" data-t="Brief & Professional">Brief & Professional</button>
+        <button class="tone" data-t="Escalation — Stay Calm">Escalation — Stay Calm</button>
+      </div>
+    </div>
+    <button class="gen-btn" id="btn-email" onclick="gen('email')">
+      <div class="spin" id="sp-email"></div>
+      <span id="lbl-email">✨ Generate Email Response</span>
+    </button>
+    <div class="err" id="err-email"></div>
+    <div class="out-wrap" id="out-email">
+      <div class="out-card">
+        <div class="out-hdr"><div class="out-hdr-lbl">📧 Email Response</div>
+          <div class="out-acts"><button class="obtn obtn-r" onclick="gen('email')">↺ Regenerate</button><button class="obtn obtn-c" onclick="cp('email')">Copy</button></div>
+        </div>
+        <div id="email-subj-wrap" style="display:none">
+          <div class="out-subj"><div class="out-subj-lbl">Subject Line</div><div class="out-subj-val" id="ob-email-subj"></div></div>
+        </div>
+        <div class="out-body" id="ob-email"></div>
+        <div class="out-meta" id="om-email"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── WHATSAPP ── -->
+  <div class="panel" id="p-whatsapp">
+    <div class="card"><div class="lbl lbl-p">Message Type</div>
+      <div class="pills" id="pills-whatsapp">
+        <button class="pill" style="border-color:var(--gold);color:#7A4500;background:#FFF8E7" data-t="delivery">📦 Delivery Update</button>
+        <button class="pill" data-t="refund">💰 Refund Confirmation</button>
+        <button class="pill" data-t="followup">🔁 Follow-up</button>
+        <button class="pill" data-t="resolution">✅ Issue Resolved</button>
+        <button class="pill" data-t="review-request">⭐ Review Request</button>
+        <button class="pill" data-t="proactive">📣 Proactive Apology</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="two">
+        <div><div class="lbl lbl-p">Customer Name</div><input type="text" id="wa-n" placeholder="e.g. Priya"></div>
+        <div><div class="lbl lbl-p">Child's Name <span style="font-weight:400;color:var(--muted)">(optional)</span></div><input type="text" id="wa-ch" placeholder="e.g. Aarav"></div>
+      </div>
+    </div>
+    <div class="card"><div class="lbl lbl-p">Context / Complaint Summary</div>
+      <textarea id="wa-c" style="min-height:70px" placeholder="Brief summary of the issue or context..."></textarea>
+    </div>
+    <div class="card"><div class="lbl lbl-g">Resolution / Update to Share</div>
+      <textarea id="wa-r" style="min-height:60px" placeholder="e.g. 'Refund processed ₹5,599.' or 'Toy dispatched, arriving tomorrow 10am-2pm.'"></textarea>
+      <div class="lbl lbl-o" style="margin-top:14px">Message Style</div>
+      <div class="tone-row" id="tone-whatsapp">
+        <button class="tone on" data-t="Warm & Concise">Warm & Concise</button>
+        <button class="tone" data-t="Apologetic">Apologetic</button>
+        <button class="tone" data-t="Professional">Professional</button>
+        <button class="tone" data-t="Friendly & Casual">Friendly & Casual</button>
+      </div>
+    </div>
+    <button class="gen-btn" id="btn-whatsapp" onclick="gen('whatsapp')">
+      <div class="spin" id="sp-whatsapp"></div>
+      <span id="lbl-whatsapp">✨ Generate WhatsApp Message</span>
+    </button>
+    <div class="err" id="err-whatsapp"></div>
+    <div class="out-wrap" id="out-whatsapp">
+      <div class="out-card">
+        <div class="out-hdr"><div class="out-hdr-lbl">💬 WhatsApp Message</div>
+          <div class="out-acts"><button class="obtn obtn-r" onclick="gen('whatsapp')">↺ Regenerate</button><button class="obtn obtn-c" onclick="cp('whatsapp')">Copy</button></div>
+        </div>
+        <div class="out-body" id="ob-whatsapp"></div>
+        <div class="out-meta" id="om-whatsapp"></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+<div class="toast" id="toast"></div>
+
+<script>
+var CUR = 'instagram';
+var TYPES  = {instagram:'delivery',facebook:'delivery',playstore:'1star',email:'delivery',whatsapp:'delivery'};
+var TONES  = {instagram:'Warm & Professional',facebook:'Warm & Professional',playstore:'Warm & Professional',email:'Warm & Formal',whatsapp:'Warm & Concise'};
+var SUBLABELS = {instagram:'📸 Instagram',facebook:'👥 Facebook',playstore:'⭐ Play Store',email:'📧 Email',whatsapp:'💬 WhatsApp'};
+
+// channel switch
+function switchCh(ch, btn) {
+  document.querySelectorAll('.ch-tab').forEach(function(b){ b.classList.remove('on'); });
+  document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('on'); });
+  btn.classList.add('on');
+  document.getElementById('p-'+ch).classList.add('on');
+  CUR = ch;
+}
+
+// pill clicks
+['instagram','facebook','playstore','email','whatsapp'].forEach(function(ch){
+  var el = document.getElementById('pills-'+ch);
+  if(!el) return;
+  el.addEventListener('click', function(e){
+    var b = e.target.closest('.pill'); if(!b) return;
+    el.querySelectorAll('.pill').forEach(function(x){
+      x.style.borderColor=''; x.style.color=''; x.style.background=''; x.style.fontWeight='';
+    });
+    TYPES[ch] = b.dataset.t;
+    b.style.background = 'var(--p)'; b.style.borderColor = 'var(--p)'; b.style.color = '#fff';
+  });
+  var tel = document.getElementById('tone-'+ch);
+  if(!tel) return;
+  tel.addEventListener('click', function(e){
+    var b = e.target.closest('.tone'); if(!b) return;
+    tel.querySelectorAll('.tone').forEach(function(x){ x.classList.remove('on'); });
+    b.classList.add('on');
+    TONES[ch] = b.dataset.t;
+  });
+});
+
+function getInputs(ch) {
+  if(ch==='instagram') return {complaint: v('ig-c'), resolution: v('ig-r')};
+  if(ch==='facebook')  return {complaint: v('fb-c'), resolution: v('fb-r')};
+  if(ch==='playstore') return {complaint: v('ps-c'), resolution: v('ps-r')};
+  if(ch==='email')     return {complaint: v('em-c'), resolution: v('em-r'), name: v('em-n'), city: v('em-city')};
+  if(ch==='whatsapp')  return {complaint: v('wa-c'), resolution: v('wa-r'), name: v('wa-n'), child: v('wa-ch')};
+}
+function v(id){ var el=document.getElementById(id); return el ? el.value.trim() : ''; }
+
+async function gen(ch) {
+  var inp = getInputs(ch);
+  if(!inp.complaint && !inp.resolution){ toast('Add a comment or resolution first'); return; }
+  var btn=document.getElementById('btn-'+ch), sp=document.getElementById('sp-'+ch), lbl=document.getElementById('lbl-'+ch), err=document.getElementById('err-'+ch);
+  btn.disabled=true; sp.style.display='block'; lbl.textContent='Generating...'; err.style.display='none';
+  try {
+    var resp = await fetch('/api/generate', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({channel:ch, type:TYPES[ch], tone:TONES[ch], complaint:inp.complaint, resolution:inp.resolution, name:inp.name||'', city:inp.city||'', child:inp.child||''})
+    });
+    var data = await resp.json();
+    if(!resp.ok) throw new Error(data.error||'Server error '+resp.status);
+    var text = data.text || '';
+    var subj = '', body = text;
+    if(ch==='email' && text.startsWith('SUBJECT:')) {
+      var lines = text.split('\n');
+      subj = lines[0].replace('SUBJECT:','').trim();
+      body = lines.slice(2).join('\n').trim();
+      document.getElementById('ob-email-subj').textContent = subj;
+      document.getElementById('email-subj-wrap').style.display='block';
+    } else if(ch==='email') {
+      document.getElementById('email-subj-wrap').style.display='none';
+    }
+    document.getElementById('ob-'+ch).textContent = body;
+    document.getElementById('om-'+ch).innerHTML = '<div class="meta-i"><div class="mdot" style="background:var(--p)"></div>'+TYPES[ch]+'</div><div class="meta-i"><div class="mdot" style="background:var(--green)"></div>'+body.split(' ').length+' words</div><div class="meta-i"><div class="mdot" style="background:var(--gold)"></div>'+TONES[ch]+'</div>';
+    document.getElementById('out-'+ch).style.display='block';
+    document.getElementById('out-'+ch).scrollIntoView({behavior:'smooth',block:'nearest'});
+  } catch(e) {
+    err.style.display='block'; err.textContent='⚠️ '+e.message;
+  } finally {
+    btn.disabled=false; sp.style.display='none';
+    lbl.textContent='✨ Generate '+SUBLABELS[ch]+' '+(ch==='email'?'Response':'Reply');
+  }
+}
+
+function cp(ch) {
+  var subj = ch==='email' ? document.getElementById('ob-email-subj').textContent : '';
+  var body = document.getElementById('ob-'+ch).textContent;
+  var full = subj ? 'Subject: '+subj+'\n\n'+body : body;
+  navigator.clipboard.writeText(full).then(function(){ toast('Copied ✓'); });
+}
+
+function toast(msg) {
+  var t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2000);
+}
+</script>
+</body>
+</html>
