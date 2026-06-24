@@ -4,82 +4,121 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>theEleFant — Response Generator</title>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --p:#6B2FA0;--p2:#8B45C5;--pbg:#F5EDFF;
+  --purple:#6B2FA0;--purple2:#8B45C5;--pbg:#F5EDFF;
   --gold:#F5A623;--gbg:#FFF8E7;
   --green:#00875A;--grbg:#E3FCF7;
   --red:#C62828;--rbg:#FFF0F0;
-  --teal:#0277BD;
+  --teal:#0277BD;--tealbg:#E1F5FE;
   --ink:#1C0B33;--muted:#6B5E7A;
   --border:rgba(107,47,160,0.12);
-  --bg:#FDFAFF;--r:14px;
+  --bg:#FDFAFF;--card:#FFFFFF;
+  --r:14px;--shadow:0 8px 32px rgba(107,47,160,0.12);
 }
 *{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
 body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
-.hdr{background:var(--p);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(107,47,160,0.35)}
-.logo{font-family:'Baloo 2',cursive;font-size:20px;font-weight:800;color:#fff;letter-spacing:-.5px}
+
+/* HEADER */
+.hdr{background:var(--purple);padding:14px 24px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(107,47,160,0.35)}
+.logo{font-family:'Baloo 2',cursive;font-size:19px;font-weight:800;color:white;letter-spacing:-0.5px}
 .logo span{color:var(--gold)}
-.hdr-sub{font-size:11px;color:rgba(255,255,255,.55);margin-top:1px}
-.badge{background:rgba(255,255,255,.12);color:#fff;font-size:11px;font-weight:700;padding:4px 12px;border-radius:100px;border:1px solid rgba(255,255,255,.18)}
-.main{max-width:860px;margin:0 auto;padding:22px 16px 80px}
-.tip{background:var(--gbg);border:1.5px solid rgba(245,166,35,.3);border-radius:10px;padding:12px 15px;margin-bottom:18px;font-size:12px;color:#7A5200;line-height:1.6}
-.tip-t{font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#9A6500;margin-bottom:4px}
-/* channel tabs */
-.ch-tabs{display:flex;background:#fff;border:1.5px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:18px}
-.ch-tab{flex:1;padding:11px 6px;text-align:center;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;color:var(--muted);background:#fff;border:none;border-right:1px solid var(--border);cursor:pointer;transition:all .15s}
+.hdr-sub{font-size:11px;font-weight:600;color:rgba(255,255,255,0.55)}
+.hdr-badge{margin-left:auto;background:rgba(255,255,255,0.12);color:white;font-size:11px;font-weight:700;padding:4px 12px;border-radius:100px;border:1px solid rgba(255,255,255,0.18)}
+
+/* CHANNEL TABS */
+.ch-tabs{display:flex;gap:0;background:white;border:1.5px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:18px}
+.ch-tab{flex:1;padding:11px 8px;text-align:center;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;border:none;background:white;border-right:1px solid var(--border);transition:all .18s;display:flex;align-items:center;justify-content:center;gap:5px}
 .ch-tab:last-child{border-right:none}
-.ch-tab.on{background:var(--p);color:#fff}
-.ch-tab:not(.on):hover{background:var(--pbg);color:var(--p)}
-/* panels */
-.panel{display:none}.panel.on{display:block}
-/* cards */
-.card{background:#fff;border:1.5px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:14px}
-.lbl{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:7px}
-.lbl-p{color:var(--p)}.lbl-g{color:var(--green)}.lbl-o{color:#9A6500}
-/* pills */
+.ch-tab:hover{background:var(--pbg);color:var(--purple)}
+.ch-tab.active{background:var(--purple);color:white}
+
+/* MAIN */
+.main{max-width:880px;margin:0 auto;padding:22px 18px 60px}
+
+/* CHANNEL PANELS */
+.ch-panel{display:none}
+.ch-panel.active{display:block}
+
+/* CARDS */
+.card{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:14px}
+.lbl{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--purple);margin-bottom:7px}
+.lbl.green{color:var(--green)}.lbl.gold{color:#9A6500}.lbl.teal{color:var(--teal)}
+
+/* TYPE PILLS */
 .pills{display:flex;gap:7px;flex-wrap:wrap}
-.pill{padding:6px 13px;border-radius:100px;border:2px solid var(--border);background:#fff;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .15s}
-.pill:hover{border-color:var(--p);color:var(--p)}
-/* inputs */
-textarea,input[type=text]{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:10px 13px;font-family:'Nunito',sans-serif;font-size:14px;color:var(--ink);background:var(--bg);resize:vertical;line-height:1.6;transition:border-color .15s;outline:none}
+.pill{padding:6px 14px;border-radius:100px;border:2px solid var(--border);background:white;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:5px}
+.pill:hover{border-color:var(--purple);color:var(--purple)}
+.pill.p-purple{background:var(--purple);border-color:var(--purple);color:white}
+.pill.p-green{background:var(--green);border-color:var(--green);color:white}
+.pill.p-gold{background:var(--gold);border-color:var(--gold);color:#7A4500}
+.pill.p-red{background:var(--red);border-color:var(--red);color:white}
+.pill.p-teal{background:var(--teal);border-color:var(--teal);color:white}
+.pill.p-gray{background:#37474F;border-color:#37474F;color:white}
+
+/* INPUTS */
+textarea,input[type=text]{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:11px 13px;font-family:'Nunito',sans-serif;font-size:14px;color:var(--ink);background:var(--bg);resize:vertical;line-height:1.6;transition:border-color .15s;outline:none}
 textarea{min-height:80px}
-textarea:focus,input:focus{border-color:var(--p);background:#fff}
+textarea:focus,input:focus{border-color:var(--purple);background:white}
 textarea::placeholder,input::placeholder{color:#BBA8CC}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(max-width:560px){.two{grid-template-columns:1fr}.ch-tab{font-size:10px;padding:10px 3px}}
-/* tones */
+
+/* EMAIL EXTRAS */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:600px){.two-col{grid-template-columns:1fr}}
+
+/* TONE PILLS */
 .tone-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
-.tone{padding:5px 13px;border-radius:100px;border:1.5px solid var(--border);background:#fff;font-family:'Nunito',sans-serif;font-size:11px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .13s}
-.tone.on{background:var(--pbg);border-color:var(--p);color:var(--p)}
-/* btn */
-.gen-btn{width:100%;padding:15px;background:var(--p);color:#fff;border:none;border-radius:100px;font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;cursor:pointer;transition:all .2s;box-shadow:0 6px 20px rgba(107,47,160,.32);margin-top:4px;display:flex;align-items:center;justify-content:center;gap:8px}
-.gen-btn:hover{background:var(--p2);transform:translateY(-2px)}
-.gen-btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
-.spin{width:16px;height:16px;border:2.5px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none}
+.tone-btn{padding:5px 13px;border-radius:100px;border:1.5px solid var(--border);background:white;font-family:'Nunito',sans-serif;font-size:11px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .13s}
+.tone-btn:hover{border-color:var(--purple);color:var(--purple)}
+.tone-btn.sel{background:var(--pbg);border-color:var(--purple);color:var(--purple)}
+
+/* GENERATE BTN */
+.gen-btn{width:100%;padding:15px;background:var(--purple);color:white;border:none;border-radius:100px;font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;cursor:pointer;transition:all .2s;box-shadow:0 6px 20px rgba(107,47,160,0.32);margin-top:4px;display:flex;align-items:center;justify-content:center;gap:8px}
+.gen-btn:hover{background:var(--purple2);transform:translateY(-2px);box-shadow:0 10px 28px rgba(107,47,160,0.42)}
+.gen-btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.spinner{width:16px;height:16px;border:2.5px solid rgba(255,255,255,0.3);border-top-color:white;border-radius:50%;animation:spin .7s linear infinite;display:none}
 @keyframes spin{to{transform:rotate(360deg)}}
-/* error */
-.err{background:var(--rbg);border:1.5px solid rgba(198,40,40,.25);border-radius:10px;padding:11px 14px;color:var(--red);font-size:13px;font-weight:600;margin-top:12px;display:none}
-/* output */
+
+/* OUTPUT */
 .out-wrap{display:none;margin-top:18px}
-.out-card{background:#fff;border:2px solid var(--p);border-radius:var(--r);overflow:hidden;box-shadow:0 8px 32px rgba(107,47,160,.12)}
+.out-card{background:white;border:2px solid var(--purple);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)}
 .out-hdr{background:var(--pbg);padding:11px 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
-.out-hdr-lbl{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--p)}
+.out-hdr-lbl{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--purple)}
 .out-acts{display:flex;gap:7px}
-.obtn{padding:5px 13px;border-radius:100px;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;cursor:pointer;border:none;transition:all .13s}
-.obtn-c{background:var(--p);color:#fff}.obtn-c:hover{background:var(--p2)}
-.obtn-r{background:#fff;color:var(--p);border:1.5px solid var(--p)}.obtn-r:hover{background:var(--pbg)}
-.out-subj{padding:10px 18px;background:#fafafa;border-bottom:1px solid var(--border)}
-.out-subj-lbl{font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
-.out-subj-val{font-size:13px;font-weight:700;color:var(--ink)}
-.out-body{padding:18px 20px;font-size:14px;line-height:1.75;color:var(--ink);white-space:pre-wrap}
+.obtn{padding:5px 13px;border-radius:100px;border:none;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .13s}
+.obtn-copy{background:var(--purple);color:white}
+.obtn-copy:hover{background:var(--purple2)}
+.obtn-regen{background:white;color:var(--purple);border:1.5px solid var(--purple)}
+.obtn-regen:hover{background:var(--pbg)}
+.out-subj{padding:11px 18px;background:#FAFAFA;border-bottom:1px solid var(--border);font-size:13px;font-weight:700;color:var(--ink)}
+.out-subj-lbl{font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.out-body{padding:18px 20px;font-size:14px;line-height:1.75;color:var(--ink);white-space:pre-wrap;min-height:80px}
 .out-meta{padding:9px 16px;background:var(--bg);border-top:1px solid var(--border);display:flex;gap:14px;flex-wrap:wrap}
 .meta-i{font-size:11px;color:var(--muted);font-weight:600;display:flex;align-items:center;gap:5px}
-.mdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-/* toast */
-.toast{position:fixed;bottom:22px;right:22px;background:var(--ink);color:#fff;padding:11px 18px;border-radius:100px;font-size:13px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.22);opacity:0;transform:translateY(8px);transition:all .22s;pointer-events:none;z-index:999}
+.mdot{width:7px;height:7px;border-radius:50%;background:var(--purple);flex-shrink:0}
+.mdot.g{background:var(--green)}.mdot.o{background:var(--gold)}
+
+/* TIPS BOX */
+.tips{background:var(--gbg);border:1.5px solid rgba(245,166,35,0.3);border-radius:10px;padding:12px 15px;margin-bottom:18px}
+.tips-t{font-size:10px;font-weight:800;color:#9A6500;margin-bottom:5px;letter-spacing:1.5px;text-transform:uppercase}
+.tips-t2{font-size:12px;color:#7A5200;line-height:1.6}
+
+/* HISTORY */
+.hist{margin-top:24px}
+.hist-lbl{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.hist-item{background:white;border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:7px;cursor:pointer;transition:all .13s}
+.hist-item:hover{border-color:var(--purple);background:var(--pbg)}
+.hist-type{font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--purple);margin-bottom:3px}
+.hist-prev{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* TOAST */
+.toast{position:fixed;bottom:22px;right:22px;background:var(--ink);color:white;padding:11px 18px;border-radius:100px;font-size:13px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,0.22);opacity:0;transform:translateY(8px);transition:all .22s;pointer-events:none;z-index:999}
 .toast.show{opacity:1;transform:translateY(0)}
+
+/* ERROR BOX */
+.err-box{background:var(--rbg);border:1.5px solid rgba(198,40,40,0.25);border-radius:10px;padding:12px 15px;color:var(--red);font-size:13px;font-weight:600;margin-top:14px;display:none}
 </style>
 </head>
 <body>
@@ -87,115 +126,139 @@ textarea::placeholder,input::placeholder{color:#BBA8CC}
 <div class="hdr">
   <div>
     <div class="logo">the <span>EleFant</span></div>
-    <div class="hdr-sub">@theelefant_official · AI Response Generator</div>
+    <div class="hdr-sub">@theelefant_official · Response Generator</div>
   </div>
-  <div class="badge">Powered by Claude ✨</div>
+  <div class="hdr-badge">AI-Powered ✨</div>
 </div>
 
 <div class="main">
-  <div class="tip">
-    <div class="tip-t">How to use</div>
-    Select the channel → pick the complaint type → paste the original comment and the resolution → Generate. Replies are crafted to be warm, human, and never defensive.
+
+  <div class="tips">
+    <div class="tips-t">How to use</div>
+    <div class="tips-t2">Select the channel, pick the complaint type, paste the comment + resolution, and generate. Replies are public-facing — warm, human, never defensive. Works best when opened via Claude.ai or hosted online.</div>
   </div>
 
-  <!-- TABS -->
+  <!-- CHANNEL TABS -->
   <div class="ch-tabs">
-    <button class="ch-tab on" onclick="switchCh('instagram',this)">📸 Instagram</button>
-    <button class="ch-tab" onclick="switchCh('facebook',this)">👥 Facebook</button>
-    <button class="ch-tab" onclick="switchCh('playstore',this)">⭐ Play Store</button>
-    <button class="ch-tab" onclick="switchCh('email',this)">📧 Email</button>
-    <button class="ch-tab" onclick="switchCh('whatsapp',this)">💬 WhatsApp</button>
+    <button class="ch-tab active" onclick="switchChannel('instagram',this)">📸 Instagram</button>
+    <button class="ch-tab" onclick="switchChannel('facebook',this)">👥 Facebook</button>
+    <button class="ch-tab" onclick="switchChannel('playstore',this)">⭐ Play Store</button>
+    <button class="ch-tab" onclick="switchChannel('email',this)">📧 Email</button>
+    <button class="ch-tab" onclick="switchChannel('whatsapp',this)">💬 WhatsApp</button>
   </div>
 
-  <!-- ── INSTAGRAM ── -->
-  <div class="panel on" id="p-instagram">
-    <div class="card"><div class="lbl lbl-p">Complaint Type</div>
+  <!-- ══ INSTAGRAM ══ -->
+  <div class="ch-panel active" id="panel-instagram">
+    <div class="card">
+      <div class="lbl">Complaint Type</div>
       <div class="pills" id="pills-instagram">
-        <button class="pill" style="border-color:var(--gold);color:#7A4500;background:#FFF8E7" data-t="delivery">📦 Delivery Delay</button>
+        <button class="pill p-gold" data-t="delivery">📦 Delivery Delay</button>
         <button class="pill" data-t="refund">💰 Refund</button>
-        <button class="pill" data-t="hygiene">🧼 Hygiene/Quality</button>
+        <button class="pill" data-t="hygiene">🧼 Hygiene / Quality</button>
         <button class="pill" data-t="app">📱 App Bug</button>
         <button class="pill" data-t="availability">🚫 Toy Unavailable</button>
-        <button class="pill" data-t="harsh">🔥 Harsh/Unfair</button>
+        <button class="pill" data-t="harsh">🔥 Harsh / Unfair</button>
         <button class="pill" data-t="positive">⭐ Positive</button>
       </div>
     </div>
-    <div class="card"><div class="lbl lbl-p">Original Comment</div>
-      <textarea id="ig-c" placeholder="Paste the customer's Instagram comment exactly as written..."></textarea>
+    <div class="card">
+      <div class="lbl">Original Comment</div>
+      <textarea id="ig-complaint" placeholder="Paste the customer's Instagram comment exactly as written..."></textarea>
     </div>
-    <div class="card"><div class="lbl lbl-g">Resolution / Current Status</div>
-      <textarea id="ig-r" style="min-height:65px" placeholder="e.g. 'Refund of ₹7,200 processed on 10 June.' or 'Team will call within 2 hours.'"></textarea>
-      <div class="lbl lbl-o" style="margin-top:14px">Tone</div>
+    <div class="card">
+      <div class="lbl green">Resolution / Current Status</div>
+      <textarea id="ig-resolution" placeholder="e.g. 'Refund of ₹7,200 processed on 10 June.' or 'Team will call within 2 hours.'" style="min-height:60px"></textarea>
+      <div class="lbl gold" style="margin-top:14px;margin-bottom:7px">Tone</div>
       <div class="tone-row" id="tone-instagram">
-        <button class="tone on" data-t="Warm & Professional">Warm & Professional</button>
-        <button class="tone" data-t="Deeply Empathetic">Deeply Empathetic</button>
-        <button class="tone" data-t="Firm but Fair">Firm but Fair</button>
-        <button class="tone" data-t="Brief & Clean">Brief & Clean</button>
+        <button class="tone-btn sel" data-tone="warm-professional">Warm & Professional</button>
+        <button class="tone-btn" data-tone="empathetic">Deeply Empathetic</button>
+        <button class="tone-btn" data-tone="firm-fair">Firm but Fair</button>
+        <button class="tone-btn" data-tone="brief">Brief & Clean</button>
       </div>
     </div>
-    <button class="gen-btn" id="btn-instagram" onclick="gen('instagram')">
-      <div class="spin" id="sp-instagram"></div>
+    <button class="gen-btn" onclick="generate('instagram')">
+      <div class="spinner" id="sp-instagram"></div>
       <span id="lbl-instagram">✨ Generate Instagram Reply</span>
     </button>
-    <div class="err" id="err-instagram"></div>
+    <div class="err-box" id="err-instagram"></div>
     <div class="out-wrap" id="out-instagram">
       <div class="out-card">
-        <div class="out-hdr"><div class="out-hdr-lbl">📸 Instagram Reply</div>
-          <div class="out-acts"><button class="obtn obtn-r" onclick="gen('instagram')">↺ Regenerate</button><button class="obtn obtn-c" onclick="cp('instagram')">Copy</button></div>
+        <div class="out-hdr">
+          <div class="out-hdr-lbl">📸 Instagram Reply</div>
+          <div class="out-acts">
+            <button class="obtn obtn-regen" onclick="generate('instagram')">↺ Regenerate</button>
+            <button class="obtn obtn-copy" onclick="copy('instagram')">Copy</button>
+          </div>
         </div>
         <div class="out-body" id="ob-instagram"></div>
         <div class="out-meta" id="om-instagram"></div>
       </div>
     </div>
+    <div class="hist" id="hist-instagram" style="display:none">
+      <div class="hist-lbl">Recent Replies</div>
+      <div id="hl-instagram"></div>
+    </div>
   </div>
 
-  <!-- ── FACEBOOK ── -->
-  <div class="panel" id="p-facebook">
-    <div class="card"><div class="lbl lbl-p">Complaint Type</div>
+  <!-- ══ FACEBOOK ══ -->
+  <div class="ch-panel" id="panel-facebook">
+    <div class="card">
+      <div class="lbl">Complaint Type</div>
       <div class="pills" id="pills-facebook">
-        <button class="pill" style="border-color:var(--gold);color:#7A4500;background:#FFF8E7" data-t="delivery">📦 Delivery Delay</button>
+        <button class="pill p-gold" data-t="delivery">📦 Delivery Delay</button>
         <button class="pill" data-t="refund">💰 Refund</button>
-        <button class="pill" data-t="hygiene">🧼 Hygiene/Quality</button>
+        <button class="pill" data-t="hygiene">🧼 Hygiene / Quality</button>
         <button class="pill" data-t="app">📱 App Bug</button>
         <button class="pill" data-t="availability">🚫 Toy Unavailable</button>
-        <button class="pill" data-t="harsh">🔥 Harsh/Unfair</button>
+        <button class="pill" data-t="harsh">🔥 Harsh / Unfair</button>
         <button class="pill" data-t="positive">⭐ Positive</button>
       </div>
     </div>
-    <div class="card"><div class="lbl lbl-p">Original Comment</div>
-      <textarea id="fb-c" placeholder="Paste the Facebook comment..."></textarea>
+    <div class="card">
+      <div class="lbl">Original Comment</div>
+      <textarea id="fb-complaint" placeholder="Paste the Facebook comment..."></textarea>
     </div>
-    <div class="card"><div class="lbl lbl-g">Resolution / Current Status</div>
-      <textarea id="fb-r" style="min-height:65px" placeholder="What's been done or what will happen next..."></textarea>
-      <div class="lbl lbl-o" style="margin-top:14px">Tone</div>
+    <div class="card">
+      <div class="lbl green">Resolution / Current Status</div>
+      <textarea id="fb-resolution" placeholder="What's been done or what will happen next..." style="min-height:60px"></textarea>
+      <div class="lbl gold" style="margin-top:14px;margin-bottom:7px">Tone</div>
       <div class="tone-row" id="tone-facebook">
-        <button class="tone on" data-t="Warm & Professional">Warm & Professional</button>
-        <button class="tone" data-t="Deeply Empathetic">Deeply Empathetic</button>
-        <button class="tone" data-t="Firm but Fair">Firm but Fair</button>
-        <button class="tone" data-t="Brief & Clean">Brief & Clean</button>
+        <button class="tone-btn sel" data-tone="warm-professional">Warm & Professional</button>
+        <button class="tone-btn" data-tone="empathetic">Deeply Empathetic</button>
+        <button class="tone-btn" data-tone="firm-fair">Firm but Fair</button>
+        <button class="tone-btn" data-tone="brief">Brief & Clean</button>
       </div>
     </div>
-    <button class="gen-btn" id="btn-facebook" onclick="gen('facebook')">
-      <div class="spin" id="sp-facebook"></div>
+    <button class="gen-btn" onclick="generate('facebook')">
+      <div class="spinner" id="sp-facebook"></div>
       <span id="lbl-facebook">✨ Generate Facebook Reply</span>
     </button>
-    <div class="err" id="err-facebook"></div>
+    <div class="err-box" id="err-facebook"></div>
     <div class="out-wrap" id="out-facebook">
       <div class="out-card">
-        <div class="out-hdr"><div class="out-hdr-lbl">👥 Facebook Reply</div>
-          <div class="out-acts"><button class="obtn obtn-r" onclick="gen('facebook')">↺ Regenerate</button><button class="obtn obtn-c" onclick="cp('facebook')">Copy</button></div>
+        <div class="out-hdr">
+          <div class="out-hdr-lbl">👥 Facebook Reply</div>
+          <div class="out-acts">
+            <button class="obtn obtn-regen" onclick="generate('facebook')">↺ Regenerate</button>
+            <button class="obtn obtn-copy" onclick="copy('facebook')">Copy</button>
+          </div>
         </div>
         <div class="out-body" id="ob-facebook"></div>
         <div class="out-meta" id="om-facebook"></div>
       </div>
     </div>
+    <div class="hist" id="hist-facebook" style="display:none">
+      <div class="hist-lbl">Recent Replies</div>
+      <div id="hl-facebook"></div>
+    </div>
   </div>
 
-  <!-- ── PLAY STORE ── -->
-  <div class="panel" id="p-playstore">
-    <div class="card"><div class="lbl lbl-p">Review Type</div>
+  <!-- ══ PLAY STORE ══ -->
+  <div class="ch-panel" id="panel-playstore">
+    <div class="card">
+      <div class="lbl">Review Type</div>
       <div class="pills" id="pills-playstore">
-        <button class="pill" style="border-color:var(--red);color:var(--red)" data-t="1star">1★ Scam/Fraud</button>
+        <button class="pill p-red" data-t="1star">1★ Scam / Fraud</button>
         <button class="pill" data-t="delivery">📦 Delivery</button>
         <button class="pill" data-t="app">📱 App Bug</button>
         <button class="pill" data-t="refund">💰 Refund</button>
@@ -203,229 +266,398 @@ textarea::placeholder,input::placeholder{color:#BBA8CC}
         <button class="pill" data-t="positive">⭐ Positive</button>
       </div>
     </div>
-    <div class="card"><div class="lbl lbl-p">Play Store Review Text</div>
-      <textarea id="ps-c" placeholder="Paste the full Play Store review..."></textarea>
+    <div class="card">
+      <div class="lbl">Play Store Review Text</div>
+      <textarea id="ps-complaint" placeholder="Paste the full Play Store review..."></textarea>
     </div>
-    <div class="card"><div class="lbl lbl-g">Resolution / Current Status</div>
-      <textarea id="ps-r" style="min-height:65px" placeholder="What's been resolved or what action is being taken..."></textarea>
-      <div class="lbl lbl-o" style="margin-top:14px">Tone</div>
+    <div class="card">
+      <div class="lbl green">Resolution / Current Status</div>
+      <textarea id="ps-resolution" placeholder="What's been resolved or what action is being taken..." style="min-height:60px"></textarea>
+      <div class="lbl gold" style="margin-top:14px;margin-bottom:7px">Tone</div>
       <div class="tone-row" id="tone-playstore">
-        <button class="tone on" data-t="Warm & Professional">Warm & Professional</button>
-        <button class="tone" data-t="Firm but Fair">Firm but Fair</button>
-        <button class="tone" data-t="Brief & Clean">Brief & Clean</button>
+        <button class="tone-btn sel" data-tone="warm-professional">Warm & Professional</button>
+        <button class="tone-btn" data-tone="firm-fair">Firm but Fair</button>
+        <button class="tone-btn" data-tone="brief">Brief & Clean</button>
       </div>
     </div>
-    <button class="gen-btn" id="btn-playstore" onclick="gen('playstore')">
-      <div class="spin" id="sp-playstore"></div>
+    <button class="gen-btn" onclick="generate('playstore')">
+      <div class="spinner" id="sp-playstore"></div>
       <span id="lbl-playstore">✨ Generate Play Store Response</span>
     </button>
-    <div class="err" id="err-playstore"></div>
+    <div class="err-box" id="err-playstore"></div>
     <div class="out-wrap" id="out-playstore">
       <div class="out-card">
-        <div class="out-hdr"><div class="out-hdr-lbl">⭐ Play Store Response</div>
-          <div class="out-acts"><button class="obtn obtn-r" onclick="gen('playstore')">↺ Regenerate</button><button class="obtn obtn-c" onclick="cp('playstore')">Copy</button></div>
+        <div class="out-hdr">
+          <div class="out-hdr-lbl">⭐ Play Store Response</div>
+          <div class="out-acts">
+            <button class="obtn obtn-regen" onclick="generate('playstore')">↺ Regenerate</button>
+            <button class="obtn obtn-copy" onclick="copy('playstore')">Copy</button>
+          </div>
         </div>
         <div class="out-body" id="ob-playstore"></div>
         <div class="out-meta" id="om-playstore"></div>
       </div>
     </div>
+    <div class="hist" id="hist-playstore" style="display:none">
+      <div class="hist-lbl">Recent Replies</div>
+      <div id="hl-playstore"></div>
+    </div>
   </div>
 
-  <!-- ── EMAIL ── -->
-  <div class="panel" id="p-email">
-    <div class="card"><div class="lbl lbl-p">Issue Type</div>
+  <!-- ══ EMAIL ══ -->
+  <div class="ch-panel" id="panel-email">
+    <div class="card">
+      <div class="lbl">Issue Type</div>
       <div class="pills" id="pills-email">
-        <button class="pill" style="border-color:var(--gold);color:#7A4500;background:#FFF8E7" data-t="delivery">📦 Delivery Delay</button>
+        <button class="pill p-gold" data-t="delivery">📦 Delivery Delay</button>
         <button class="pill" data-t="refund">💰 Refund Request</button>
-        <button class="pill" data-t="hygiene">🧼 Hygiene/Quality</button>
-        <button class="pill" data-t="app">📱 App/Tech Issue</button>
+        <button class="pill" data-t="hygiene">🧼 Hygiene / Quality</button>
+        <button class="pill" data-t="app">📱 App / Tech Issue</button>
         <button class="pill" data-t="availability">🚫 Toy Unavailable</button>
         <button class="pill" data-t="cancellation">❌ Cancellation</button>
-        <button class="pill" data-t="escalation">⚠️ Escalation/Legal</button>
+        <button class="pill" data-t="escalation">⚠️ Escalation / Legal</button>
         <button class="pill" data-t="general">💬 General Enquiry</button>
       </div>
     </div>
     <div class="card">
-      <div class="two">
-        <div><div class="lbl lbl-p">Customer Name</div><input type="text" id="em-n" placeholder="e.g. Priya Sharma"></div>
-        <div><div class="lbl lbl-p">Customer's City</div><input type="text" id="em-city" placeholder="e.g. Mumbai"></div>
+      <div class="two-col">
+        <div>
+          <div class="lbl">Customer Name</div>
+          <input type="text" id="em-name" placeholder="e.g. Priya Sharma">
+        </div>
+        <div>
+          <div class="lbl">Customer's City</div>
+          <input type="text" id="em-city" placeholder="e.g. Mumbai">
+        </div>
       </div>
     </div>
-    <div class="card"><div class="lbl lbl-p">Original Email / Complaint</div>
-      <textarea id="em-c" style="min-height:100px" placeholder="Paste the customer's full email or complaint message..."></textarea>
+    <div class="card">
+      <div class="lbl">Original Email / Complaint</div>
+      <textarea id="em-complaint" placeholder="Paste the customer's full email or complaint message..." style="min-height:100px"></textarea>
     </div>
-    <div class="card"><div class="lbl lbl-g">Resolution / Action Taken</div>
-      <textarea id="em-r" style="min-height:70px" placeholder="What's been done or committed to? e.g. 'Refund of ₹8,999 initiated on 10 June, 5-7 working days to reflect.'"></textarea>
-      <div class="lbl lbl-o" style="margin-top:14px">Email Tone</div>
+    <div class="card">
+      <div class="lbl green">Resolution / Action Taken</div>
+      <textarea id="em-resolution" placeholder="What's been done or committed to? Be specific — e.g. 'Refund of ₹8,999 initiated on 10 June, 5-7 working days.' or 'Delivery rescheduled for 12 June 10am-2pm.'" style="min-height:70px"></textarea>
+      <div class="lbl gold" style="margin-top:14px;margin-bottom:7px">Email Tone & Length</div>
       <div class="tone-row" id="tone-email">
-        <button class="tone on" data-t="Warm & Formal">Warm & Formal</button>
-        <button class="tone" data-t="Empathetic + Detailed">Empathetic + Detailed</button>
-        <button class="tone" data-t="Brief & Professional">Brief & Professional</button>
-        <button class="tone" data-t="Escalation — Stay Calm">Escalation — Stay Calm</button>
+        <button class="tone-btn sel" data-tone="warm-formal">Warm & Formal</button>
+        <button class="tone-btn" data-tone="empathetic-detailed">Empathetic + Detailed</button>
+        <button class="tone-btn" data-tone="brief-professional">Brief & Professional</button>
+        <button class="tone-btn" data-tone="escalation-calm">Escalation — Stay Calm</button>
       </div>
     </div>
-    <button class="gen-btn" id="btn-email" onclick="gen('email')">
-      <div class="spin" id="sp-email"></div>
+    <button class="gen-btn" onclick="generate('email')">
+      <div class="spinner" id="sp-email"></div>
       <span id="lbl-email">✨ Generate Email Response</span>
     </button>
-    <div class="err" id="err-email"></div>
+    <div class="err-box" id="err-email"></div>
     <div class="out-wrap" id="out-email">
       <div class="out-card">
-        <div class="out-hdr"><div class="out-hdr-lbl">📧 Email Response</div>
-          <div class="out-acts"><button class="obtn obtn-r" onclick="gen('email')">↺ Regenerate</button><button class="obtn obtn-c" onclick="cp('email')">Copy</button></div>
+        <div class="out-hdr">
+          <div class="out-hdr-lbl">📧 Email Response</div>
+          <div class="out-acts">
+            <button class="obtn obtn-regen" onclick="generate('email')">↺ Regenerate</button>
+            <button class="obtn obtn-copy" onclick="copy('email')">Copy</button>
+          </div>
         </div>
-        <div id="email-subj-wrap" style="display:none">
-          <div class="out-subj"><div class="out-subj-lbl">Subject Line</div><div class="out-subj-val" id="ob-email-subj"></div></div>
+        <div id="out-email-subj" style="display:none">
+          <div class="out-subj"><div class="out-subj-lbl">Subject Line</div><div id="ob-email-subj"></div></div>
         </div>
         <div class="out-body" id="ob-email"></div>
         <div class="out-meta" id="om-email"></div>
       </div>
     </div>
+    <div class="hist" id="hist-email" style="display:none">
+      <div class="hist-lbl">Recent Replies</div>
+      <div id="hl-email"></div>
+    </div>
   </div>
 
-  <!-- ── WHATSAPP ── -->
-  <div class="panel" id="p-whatsapp">
-    <div class="card"><div class="lbl lbl-p">Message Type</div>
+  <!-- ══ WHATSAPP ══ -->
+  <div class="ch-panel" id="panel-whatsapp">
+    <div class="card">
+      <div class="lbl">Message Type</div>
       <div class="pills" id="pills-whatsapp">
-        <button class="pill" style="border-color:var(--gold);color:#7A4500;background:#FFF8E7" data-t="delivery">📦 Delivery Update</button>
+        <button class="pill p-gold" data-t="delivery">📦 Delivery Update</button>
         <button class="pill" data-t="refund">💰 Refund Confirmation</button>
-        <button class="pill" data-t="followup">🔁 Follow-up</button>
+        <button class="pill" data-t="followup">🔁 Follow-up on Complaint</button>
         <button class="pill" data-t="resolution">✅ Issue Resolved</button>
         <button class="pill" data-t="review-request">⭐ Review Request</button>
         <button class="pill" data-t="proactive">📣 Proactive Apology</button>
       </div>
     </div>
     <div class="card">
-      <div class="two">
-        <div><div class="lbl lbl-p">Customer Name</div><input type="text" id="wa-n" placeholder="e.g. Priya"></div>
-        <div><div class="lbl lbl-p">Child's Name <span style="font-weight:400;color:var(--muted)">(optional)</span></div><input type="text" id="wa-ch" placeholder="e.g. Aarav"></div>
+      <div class="lbl">Customer Name & Child's Name <span style="font-weight:400;color:var(--muted)">(optional)</span></div>
+      <div class="two-col">
+        <input type="text" id="wa-name" placeholder="e.g. Priya">
+        <input type="text" id="wa-child" placeholder="Child's name e.g. Aarav">
       </div>
     </div>
-    <div class="card"><div class="lbl lbl-p">Context / Complaint Summary</div>
-      <textarea id="wa-c" style="min-height:70px" placeholder="Brief summary of the issue or context..."></textarea>
+    <div class="card">
+      <div class="lbl">Context / Complaint Summary</div>
+      <textarea id="wa-complaint" placeholder="Brief summary of the issue or context — e.g. 'Delivery delayed by 3 days, customer complained on Instagram about missing toy.'" style="min-height:70px"></textarea>
     </div>
-    <div class="card"><div class="lbl lbl-g">Resolution / Update to Share</div>
-      <textarea id="wa-r" style="min-height:60px" placeholder="e.g. 'Refund processed ₹5,599.' or 'Toy dispatched, arriving tomorrow 10am-2pm.'"></textarea>
-      <div class="lbl lbl-o" style="margin-top:14px">Message Style</div>
+    <div class="card">
+      <div class="lbl green">Resolution / Update to Share</div>
+      <textarea id="wa-resolution" placeholder="What are you telling them? e.g. 'Refund processed ₹5,599.' or 'Toy dispatched, arriving tomorrow 10am-2pm.'" style="min-height:60px"></textarea>
+      <div class="lbl gold" style="margin-top:14px;margin-bottom:7px">Message Style</div>
       <div class="tone-row" id="tone-whatsapp">
-        <button class="tone on" data-t="Warm & Concise">Warm & Concise</button>
-        <button class="tone" data-t="Apologetic">Apologetic</button>
-        <button class="tone" data-t="Professional">Professional</button>
-        <button class="tone" data-t="Friendly & Casual">Friendly & Casual</button>
+        <button class="tone-btn sel" data-tone="warm-concise">Warm & Concise</button>
+        <button class="tone-btn" data-tone="apologetic">Apologetic</button>
+        <button class="tone-btn" data-tone="professional">Professional</button>
+        <button class="tone-btn" data-tone="friendly">Friendly & Casual</button>
       </div>
     </div>
-    <button class="gen-btn" id="btn-whatsapp" onclick="gen('whatsapp')">
-      <div class="spin" id="sp-whatsapp"></div>
+    <button class="gen-btn" onclick="generate('whatsapp')">
+      <div class="spinner" id="sp-whatsapp"></div>
       <span id="lbl-whatsapp">✨ Generate WhatsApp Message</span>
     </button>
-    <div class="err" id="err-whatsapp"></div>
+    <div class="err-box" id="err-whatsapp"></div>
     <div class="out-wrap" id="out-whatsapp">
       <div class="out-card">
-        <div class="out-hdr"><div class="out-hdr-lbl">💬 WhatsApp Message</div>
-          <div class="out-acts"><button class="obtn obtn-r" onclick="gen('whatsapp')">↺ Regenerate</button><button class="obtn obtn-c" onclick="cp('whatsapp')">Copy</button></div>
+        <div class="out-hdr">
+          <div class="out-hdr-lbl">💬 WhatsApp Message</div>
+          <div class="out-acts">
+            <button class="obtn obtn-regen" onclick="generate('whatsapp')">↺ Regenerate</button>
+            <button class="obtn obtn-copy" onclick="copy('whatsapp')">Copy</button>
+          </div>
         </div>
         <div class="out-body" id="ob-whatsapp"></div>
         <div class="out-meta" id="om-whatsapp"></div>
       </div>
     </div>
+    <div class="hist" id="hist-whatsapp" style="display:none">
+      <div class="hist-lbl">Recent Messages</div>
+      <div id="hl-whatsapp"></div>
+    </div>
   </div>
 
 </div><!-- /main -->
+
 <div class="toast" id="toast"></div>
 
 <script>
-var CUR = 'instagram';
-var TYPES  = {instagram:'delivery',facebook:'delivery',playstore:'1star',email:'delivery',whatsapp:'delivery'};
-var TONES  = {instagram:'Warm & Professional',facebook:'Warm & Professional',playstore:'Warm & Professional',email:'Warm & Formal',whatsapp:'Warm & Concise'};
-var SUBLABELS = {instagram:'📸 Instagram',facebook:'👥 Facebook',playstore:'⭐ Play Store',email:'📧 Email',whatsapp:'💬 WhatsApp'};
+var activeChannel = 'instagram';
+var selectedTypes = {instagram:'delivery',facebook:'delivery',playstore:'1star',email:'delivery',whatsapp:'delivery'};
+var selectedTones = {instagram:'warm-professional',facebook:'warm-professional',playstore:'warm-professional',email:'warm-formal',whatsapp:'warm-concise'};
+var histories = {instagram:[],facebook:[],playstore:[],email:[],whatsapp:[]};
 
-// channel switch
-function switchCh(ch, btn) {
-  document.querySelectorAll('.ch-tab').forEach(function(b){ b.classList.remove('on'); });
-  document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('on'); });
-  btn.classList.add('on');
-  document.getElementById('p-'+ch).classList.add('on');
-  CUR = ch;
+function switchChannel(ch, btn) {
+  document.querySelectorAll('.ch-panel').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.ch-tab').forEach(function(t){ t.classList.remove('active'); });
+  document.getElementById('panel-'+ch).classList.add('active');
+  btn.classList.add('active');
+  activeChannel = ch;
 }
 
-// pill clicks
+// Type pill clicks — delegate per panel
 ['instagram','facebook','playstore','email','whatsapp'].forEach(function(ch){
-  var el = document.getElementById('pills-'+ch);
-  if(!el) return;
-  el.addEventListener('click', function(e){
-    var b = e.target.closest('.pill'); if(!b) return;
-    el.querySelectorAll('.pill').forEach(function(x){
-      x.style.borderColor=''; x.style.color=''; x.style.background=''; x.style.fontWeight='';
-    });
-    TYPES[ch] = b.dataset.t;
-    b.style.background = 'var(--p)'; b.style.borderColor = 'var(--p)'; b.style.color = '#fff';
+  var pillsEl = document.getElementById('pills-'+ch);
+  if(!pillsEl) return;
+  pillsEl.addEventListener('click', function(e){
+    var btn = e.target.closest('.pill');
+    if(!btn) return;
+    pillsEl.querySelectorAll('.pill').forEach(function(b){ b.className='pill'; });
+    selectedTypes[ch] = btn.dataset.t;
+    var col = {
+      delivery:'p-gold',refund:'p-green',hygiene:'p-teal',app:'p-gray',
+      availability:'p-red',harsh:'p-red','1star':'p-red',positive:'p-green',
+      cancellation:'p-red',escalation:'p-red',general:'p-teal',
+      followup:'p-gold',resolution:'p-green','review-request':'p-purple',proactive:'p-teal'
+    }[btn.dataset.t] || 'p-purple';
+    btn.classList.add(col);
   });
-  var tel = document.getElementById('tone-'+ch);
-  if(!tel) return;
-  tel.addEventListener('click', function(e){
-    var b = e.target.closest('.tone'); if(!b) return;
-    tel.querySelectorAll('.tone').forEach(function(x){ x.classList.remove('on'); });
-    b.classList.add('on');
-    TONES[ch] = b.dataset.t;
+  var toneEl = document.getElementById('tone-'+ch);
+  if(!toneEl) return;
+  toneEl.addEventListener('click', function(e){
+    var btn = e.target.closest('.tone-btn');
+    if(!btn) return;
+    toneEl.querySelectorAll('.tone-btn').forEach(function(b){ b.classList.remove('sel'); });
+    btn.classList.add('sel');
+    selectedTones[ch] = btn.dataset.tone;
   });
 });
 
 function getInputs(ch) {
-  if(ch==='instagram') return {complaint: v('ig-c'), resolution: v('ig-r')};
-  if(ch==='facebook')  return {complaint: v('fb-c'), resolution: v('fb-r')};
-  if(ch==='playstore') return {complaint: v('ps-c'), resolution: v('ps-r')};
-  if(ch==='email')     return {complaint: v('em-c'), resolution: v('em-r'), name: v('em-n'), city: v('em-city')};
-  if(ch==='whatsapp')  return {complaint: v('wa-c'), resolution: v('wa-r'), name: v('wa-n'), child: v('wa-ch')};
+  if(ch==='instagram') return { complaint: document.getElementById('ig-complaint').value.trim(), resolution: document.getElementById('ig-resolution').value.trim() };
+  if(ch==='facebook')  return { complaint: document.getElementById('fb-complaint').value.trim(), resolution: document.getElementById('fb-resolution').value.trim() };
+  if(ch==='playstore') return { complaint: document.getElementById('ps-complaint').value.trim(), resolution: document.getElementById('ps-resolution').value.trim() };
+  if(ch==='email')     return { complaint: document.getElementById('em-complaint').value.trim(), resolution: document.getElementById('em-resolution').value.trim(), name: document.getElementById('em-name').value.trim(), city: document.getElementById('em-city').value.trim() };
+  if(ch==='whatsapp')  return { complaint: document.getElementById('wa-complaint').value.trim(), resolution: document.getElementById('wa-resolution').value.trim(), name: document.getElementById('wa-name').value.trim(), child: document.getElementById('wa-child').value.trim() };
 }
-function v(id){ var el=document.getElementById(id); return el ? el.value.trim() : ''; }
 
-async function gen(ch) {
-  var inp = getInputs(ch);
-  if(!inp.complaint && !inp.resolution){ toast('Add a comment or resolution first'); return; }
-  var btn=document.getElementById('btn-'+ch), sp=document.getElementById('sp-'+ch), lbl=document.getElementById('lbl-'+ch), err=document.getElementById('err-'+ch);
-  btn.disabled=true; sp.style.display='block'; lbl.textContent='Generating...'; err.style.display='none';
+var TYPE_LABELS = {
+  delivery:'Delivery Delay',refund:'Refund Issue',hygiene:'Hygiene / Quality',
+  app:'App Bug',availability:'Toy Unavailable',harsh:'Harsh / Unfair Comment',
+  positive:'Positive Comment','1star':'1-Star / Scam Review',
+  cancellation:'Cancellation Request',escalation:'Escalation / Legal Threat',
+  general:'General Enquiry',followup:'Follow-up on Complaint',
+  resolution:'Issue Resolved','review-request':'Review Request',proactive:'Proactive Apology'
+};
+
+var TYPE_GUIDES = {
+  delivery:'A delivery was delayed. Acknowledge the wait, confirm what happened, state the resolution clearly, and show personal accountability.',
+  refund:'Customer requested or is waiting for a refund. Confirm the status with specifics — amount, date processed, timeline to reflect. Close warmly.',
+  hygiene:'Customer complained about toy hygiene or missing/broken parts. This is extremely sensitive — our 12-step hygiene process is a core brand promise. Acknowledge seriously, take full responsibility, confirm exact resolution.',
+  app:'Customer faced an app bug — ordering blocked, wrong delivery status, cancel button missing. Technical empathy. Confirm fix timeline or offer manual workaround.',
+  availability:'Large toy or specific toy was on pre-order or unavailable. Very common pain point. Acknowledge honestly, do not overpromise a date, offer concrete alternatives or next steps.',
+  harsh:'Comment uses words like scam, fraud, fake, going legal, consumer forum, police. CRITICAL: Do NOT be defensive. Do NOT argue facts publicly. Be disarmingly calm, warm, and caring. Acknowledge their frustration, move the conversation to DM immediately. Remember: other prospective parents are reading this reply.',
+  positive:'Customer left a warm positive comment or review. Reply with genuine celebration. Reference their child, the joy of play, and theEleFant\'s mission. Make them feel like an important part of the community.',
+  '1star':'A 1-star Play Store review — may mention scam, poor service, or app issues. Reply is visible to all prospective app downloaders. Stay calm, professional, acknowledge, confirm action, invite to contact directly.',
+  cancellation:'Customer wants to cancel their subscription. Acknowledge their decision with grace. Confirm the cancellation process. Do not beg them to stay — end on warmth so they may return.',
+  escalation:'Customer has threatened legal action, consumer forum, or social media campaign. Stay extremely calm. No defensiveness. Acknowledge, take responsibility, provide a direct senior contact immediately.',
+  general:'A general query or enquiry. Answer helpfully and warmly.',
+  followup:'A follow-up message checking status on an existing complaint. Update them specifically on where things stand.',
+  resolution:'You are confirming an issue has been fully resolved. Be specific about what was done. Close with genuine warmth.',
+  'review-request':'You are asking a happy subscriber to leave an honest review. Personal, no pressure, genuine.',
+  proactive:'You are proactively reaching out to a customer who had a bad experience before they post publicly. Lead with accountability.'
+};
+
+var CHANNEL_CONTEXT = {
+  instagram:'This is a PUBLIC Instagram comment reply. It is visible to all followers and prospective customers. Keep under 120 words. Maximum 2 emojis. No hashtags.',
+  facebook:'This is a PUBLIC Facebook comment reply. Slightly more detailed than Instagram is acceptable. Keep under 150 words. Warm and human.',
+  playstore:'This is a PUBLIC Play Store developer response. It is visible to every person who reads the app listing. Professional and reassuring. Under 180 words. No emojis.',
+  email:'This is a PRIVATE email response. It can be detailed, thorough, and formal. Include a subject line on the first line prefixed with "SUBJECT: ". Then a blank line. Then the full email with proper greeting and sign-off. Sign off as "Customer Care Team, theEleFant".',
+  whatsapp:'This is a PRIVATE WhatsApp message. Keep it short, warm, and conversational. Use line breaks naturally. WhatsApp bold (*text*) is acceptable sparingly. Under 100 words ideally.'
+};
+
+var TONE_GUIDES = {
+  'warm-professional':'Warm, human, and professional. Empathetic but composed. Not overly formal.',
+  'empathetic':'Deeply empathetic and apologetic. Lead with feeling. The parent should feel genuinely heard.',
+  'firm-fair':'Acknowledge the issue clearly, state what was done, do not over-apologise. Factual and fair.',
+  'brief':'Short, clean, direct. Maximum 3 sentences. No filler.',
+  'warm-formal':'Warm but appropriately formal for email. Structured with proper greeting and sign-off.',
+  'empathetic-detailed':'Thorough and empathetic. Address every point raised by the customer. Detailed action plan.',
+  'brief-professional':'Concise, professional email. Get to the point quickly. No fluff.',
+  'escalation-calm':'Responding to a legal threat or escalation. Extremely calm and measured. No defensiveness. Direct senior contact offered.',
+  'warm-concise':'Warm and brief. Feels like a real person texting, not a customer service bot.',
+  'apologetic':'Lead with a genuine apology. Take full responsibility. Action-oriented.',
+  'professional':'Professional and clear. Warm but not overly casual.',
+  'friendly':'Friendly and casual. Like a text from someone who genuinely cares.'
+};
+
+function buildPrompt(ch, inputs) {
+  var type = selectedTypes[ch];
+  var tone = selectedTones[ch];
+  var extraContext = '';
+  if(ch==='email' && inputs.name) extraContext += '\nCustomer name: '+inputs.name;
+  if(ch==='email' && inputs.city) extraContext += '\nCustomer city: '+inputs.city;
+  if(ch==='whatsapp' && inputs.name) extraContext += '\nCustomer name: '+inputs.name;
+  if(ch==='whatsapp' && inputs.child) extraContext += '\nChild\'s name: '+inputs.child;
+
+  return 'You are the customer care team for theEleFant (@theelefant_official), India\'s largest toy subscription library. You write responses that are warm, human, on-brand, and appropriate for the channel.\n\nBrand voice: Warm, expert, developmental-focused, never corporate, never defensive. We care deeply about children\'s growth. We own our mistakes fully.\n\nCHANNEL: '+ch.toUpperCase()+'\nCHANNEL RULES: '+CHANNEL_CONTEXT[ch]+'\n\nCOMPLAINT TYPE: '+(TYPE_LABELS[type]||type)+'\nTYPE GUIDANCE: '+(TYPE_GUIDES[type]||'')+'\n\nTONE: '+(TONE_GUIDES[tone]||tone)+(extraContext?'\n\nADDITIONAL CONTEXT:'+extraContext:'')+'\n\nORIGINAL MESSAGE:\n"'+(inputs.complaint||'No complaint text provided.')+'"'+'\n\nRESOLUTION / CURRENT STATUS:\n"'+(inputs.resolution||'No specific resolution provided — acknowledge and invite to contact us directly for immediate help.')+'"'+'\n\nRULES:\n- For Instagram/Facebook: start with customer\'s first name if it\'s a real name, skip if it\'s a handle.\n- Never say "we understand your frustration" — it\'s a cliché.\n- Never argue facts publicly on social media.\n- For resolved: confirm specifics of what was done (use resolution details).\n- For unresolved: acknowledge, give specific next step and timeframe.\n- For harsh/legal: stay calm, move to DM, do not argue.\n- End genuinely — not "have a great day".\n- For email: start with "SUBJECT: [subject line]" then blank line then full email.\n- Write the response ONLY. No explanation, no preamble.';
+}
+
+async function generate(ch) {
+  var inputs = getInputs(ch);
+  if(!inputs.complaint && ch!=='whatsapp') {
+    showToast('Paste a comment or message first');
+    return;
+  }
+  if(ch==='whatsapp' && !inputs.complaint && !inputs.resolution) {
+    showToast('Add some context or resolution to send');
+    return;
+  }
+
+  var sp = document.getElementById('sp-'+ch);
+  var lbl = document.getElementById('lbl-'+ch);
+  var genBtn = document.querySelector('#panel-'+ch+' .gen-btn');
+  var errBox = document.getElementById('err-'+ch);
+  genBtn.disabled = true;
+  sp.style.display = 'block';
+  lbl.textContent = 'Generating...';
+  errBox.style.display = 'none';
+
   try {
-    var resp = await fetch('/api/generate', {
+    var resp = await fetch('https://api.anthropic.com/v1/messages', {
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({channel:ch, type:TYPES[ch], tone:TONES[ch], complaint:inp.complaint, resolution:inp.resolution, name:inp.name||'', city:inp.city||'', child:inp.child||''})
+      body:JSON.stringify({
+        model:'claude-sonnet-4-6',
+        max_tokens:1000,
+        messages:[{role:'user',content:buildPrompt(ch,inputs)}]
+      })
     });
-    var data = await resp.json();
-    if(!resp.ok) throw new Error(data.error||'Server error '+resp.status);
-    var text = data.text || '';
-    var subj = '', body = text;
-    if(ch==='email' && text.startsWith('SUBJECT:')) {
-      var lines = text.split('\n');
-      subj = lines[0].replace('SUBJECT:','').trim();
-      body = lines.slice(2).join('\n').trim();
-      document.getElementById('ob-email-subj').textContent = subj;
-      document.getElementById('email-subj-wrap').style.display='block';
-    } else if(ch==='email') {
-      document.getElementById('email-subj-wrap').style.display='none';
+
+    if(!resp.ok) {
+      var errData = await resp.json();
+      throw new Error(errData.error?.message || 'API error '+resp.status);
     }
-    document.getElementById('ob-'+ch).textContent = body;
-    document.getElementById('om-'+ch).innerHTML = '<div class="meta-i"><div class="mdot" style="background:var(--p)"></div>'+TYPES[ch]+'</div><div class="meta-i"><div class="mdot" style="background:var(--green)"></div>'+body.split(' ').length+' words</div><div class="meta-i"><div class="mdot" style="background:var(--gold)"></div>'+TONES[ch]+'</div>';
-    document.getElementById('out-'+ch).style.display='block';
+
+    var data = await resp.json();
+    var reply = (data.content&&data.content[0]&&data.content[0].text) ? data.content[0].text : 'Could not generate reply. Please try again.';
+
+    // Handle email subject line
+    if(ch==='email' && reply.startsWith('SUBJECT:')) {
+      var lines = reply.split('\n');
+      var subj = lines[0].replace('SUBJECT:','').trim();
+      var body = lines.slice(2).join('\n').trim();
+      document.getElementById('ob-email-subj').textContent = subj;
+      document.getElementById('out-email-subj').style.display = 'block';
+      document.getElementById('ob-'+ch).textContent = body;
+    } else {
+      if(ch==='email') document.getElementById('out-email-subj').style.display='none';
+      document.getElementById('ob-'+ch).textContent = reply;
+    }
+
+    var wc = reply.split(' ').length;
+    document.getElementById('om-'+ch).innerHTML = '<div class="meta-i"><div class="mdot"></div>'+(TYPE_LABELS[selectedTypes[ch]]||selectedTypes[ch])+'</div><div class="meta-i"><div class="mdot g"></div>'+wc+' words</div><div class="meta-i"><div class="mdot o"></div>'+selectedTones[ch].replace(/-/g,' ')+'</div>';
+
+    document.getElementById('out-'+ch).style.display = 'block';
     document.getElementById('out-'+ch).scrollIntoView({behavior:'smooth',block:'nearest'});
-  } catch(e) {
-    err.style.display='block'; err.textContent='⚠️ '+e.message;
+
+    // history
+    histories[ch].unshift({type:selectedTypes[ch],preview:(inputs.complaint||inputs.resolution||'').slice(0,70),reply:reply,subj:ch==='email'?document.getElementById('ob-email-subj').textContent:''});
+    if(histories[ch].length>6) histories[ch].pop();
+    renderHistory(ch);
+
+  } catch(err) {
+    errBox.style.display = 'block';
+    errBox.textContent = 'Error: '+err.message+'. Make sure you are using this tool inside Claude.ai (not as a downloaded file).';
   } finally {
-    btn.disabled=false; sp.style.display='none';
-    lbl.textContent='✨ Generate '+SUBLABELS[ch]+' '+(ch==='email'?'Response':'Reply');
+    genBtn.disabled = false;
+    sp.style.display = 'none';
+    lbl.textContent = '✨ Generate '+(ch==='email'?'Email Response':ch==='whatsapp'?'WhatsApp Message':ch.charAt(0).toUpperCase()+ch.slice(1)+' Reply');
   }
 }
 
-function cp(ch) {
+function copy(ch) {
   var subj = ch==='email' ? document.getElementById('ob-email-subj').textContent : '';
   var body = document.getElementById('ob-'+ch).textContent;
   var full = subj ? 'Subject: '+subj+'\n\n'+body : body;
-  navigator.clipboard.writeText(full).then(function(){ toast('Copied ✓'); });
+  navigator.clipboard.writeText(full).then(function(){ showToast('Copied ✓'); });
 }
 
-function toast(msg) {
-  var t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+function renderHistory(ch) {
+  if(!histories[ch].length) return;
+  document.getElementById('hist-'+ch).style.display = 'block';
+  document.getElementById('hl-'+ch).innerHTML = histories[ch].map(function(h,i){
+    return '<div class="hist-item" onclick="loadHistory(\''+ch+'\','+i+')">'
+      +'<div class="hist-type">'+(TYPE_LABELS[h.type]||h.type)+'</div>'
+      +'<div class="hist-prev">'+(h.preview||'(no preview)')+'</div>'
+      +'</div>';
+  }).join('');
+}
+
+function loadHistory(ch,i) {
+  var h = histories[ch][i];
+  if(ch==='email' && h.subj) {
+    document.getElementById('ob-email-subj').textContent = h.subj;
+    document.getElementById('out-email-subj').style.display='block';
+  }
+  document.getElementById('ob-'+ch).textContent = h.reply;
+  document.getElementById('out-'+ch).style.display='block';
+  document.getElementById('out-'+ch).scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
   setTimeout(function(){ t.classList.remove('show'); }, 2000);
 }
+
+document.addEventListener('keydown',function(e){ if((e.metaKey||e.ctrlKey)&&e.key==='Enter') generate(activeChannel); });
 </script>
 </body>
 </html>
